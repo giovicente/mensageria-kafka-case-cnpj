@@ -5,6 +5,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
+
 @Service
 public class ValidadorService {
 
@@ -21,8 +23,8 @@ public class ValidadorService {
         return cnpjObjeto;
     }
 
-    public boolean validarCapital(double capitalSocial) {
-        if (capitalSocial > CAPITAL_MINIMO_DE_CADASTRO) {
+    public boolean validarCapital(BigDecimal capital_social) {
+        if (capital_social.doubleValue() > CAPITAL_MINIMO_DE_CADASTRO) {
             return true;
         }
 

@@ -1,35 +1,30 @@
 package com.giovicente.validador;
 
 import com.giovicente.cadastroproducer.Cadastro;
-import com.giovicente.clients.Cnpj;
-import com.giovicente.clients.CnpjClient;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.messaging.handler.annotation.Payload;
 import org.springframework.stereotype.Component;
 
-import javax.validation.Valid;
-
 @Component
 public class ValidadorConsumer {
 
     @Autowired
-    private CnpjClient cnpjClient;
-
-    @Autowired
-    private ValidadorProducer validadorProducer;
+    private ValidadorService validadorService;
 
     @KafkaListener(topics = "spec3-giovanni-vicente-2", groupId = "giovanni-2")
     public void receber(@Payload Cadastro cadastro) {
-        Cnpj cnpjObjeto = cnpjClient.getByCnpj(cadastro.getCnpj());
+        System.out.println("Recebi uma requisição!");
 
-        if (cnpjObjeto.validarCapital(cnpjObjeto.getCapitalSocial())) {
+        Cnpj cnpjObjeto = validadorService.verificarCnpj(cadastro);
+
+        if (validadorService.validarCapital(cnpjObjeto.getCapitalSocial())) {
             cadastro.setCadastroAprovado(true);
         } else {
             cadastro.setCadastroAprovado(false);
         }
 
-        validadorProducer.enviarAoKafka(cadastro);
+        validadorService.enviarAoKafka(cadastro);
     }
 
 }

@@ -1,4 +1,4 @@
-package com.giovicente.clients;
+package com.giovicente.validador;
 
 public class Cnpj {
 
@@ -9,13 +9,5 @@ public class Cnpj {
     public double getCapitalSocial() { return capitalSocial; }
 
     public void setCapitalSocial(double capitalSocial) { this.capitalSocial = capitalSocial; }
-
-    public boolean validarCapital(double capitalSocial) {
-        if (capitalSocial > 1000000.00) {
-            return true;
-        }
-
-        return false;
-    }
 
 }

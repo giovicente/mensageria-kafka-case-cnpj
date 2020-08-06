@@ -14,7 +14,7 @@ public class ValidadorConsumer {
 
     @KafkaListener(topics = "spec3-giovanni-vicente-2", groupId = "giovanni-2")
     public void receber(@Payload Cadastro cadastro) {
-        System.out.println("Recebi uma requisição!");
+        System.out.println("Recebi uma requisição! O Cnpj é " + cadastro.getCnpj());
 
         Cnpj cnpjObjeto = validadorService.verificarCnpj(cadastro);
 
